@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.axalit</groupId>
+        <artifactId>AxalitDemoKeyCloak</artifactId>
+        <version>1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <groupId>ru.axalit.module</groupId>
+    <artifactId>axalit-backend</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.0</junit.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>io.github.fvarrui</groupId>
+                <artifactId>javapackager</artifactId>
+                <version>1.7.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                        <configuration>
+                            <organizationName>Axalit</organizationName>
+                            <name>BACKEND</name>
+
+                            <outputDirectory>../../target</outputDirectory>
+                            <mainClass>ru.axalit.modules.backend.AxLaunchController</mainClass>
+                            <bundleJre>true</bundleJre>
+                            <customizedJre>false</customizedJre>
+                            <generateInstaller>false</generateInstaller>
+                            <copyDependencies>true</copyDependencies>
+
+                            <additionalResources>
+                                <additionalResource>${basedir}/src/main/resources/BACKEND.cmd</additionalResource>
+                            </additionalResources>
+
+                            <vmArgs>
+                                <vmArg>-ea</vmArg>
+                                <vmArg>-Xms1g</vmArg>
+                                <vmArg>-Xmx8g</vmArg>
+                                <vmArg>-Dfile.encoding="UTF-8"</vmArg>
+                                <vmArg>-Dprism.vsync=false</vmArg>
+                                <vmArg>-Dprism.vpipe=true</vmArg>
+                                <vmArg>-Dprism.verbose=false</vmArg>
+                                <vmArg>-Dprism.poolstats=false</vmArg>
+                                <vmArg>-Dprism.forceGPU=false</vmArg>
+                                <vmArg>-Dprism.maxvram=4096m</vmArg>
+                            </vmArgs>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <move file="${project.basedir}/../../target/${project.artifactId}-${project.version}-runnable.jar"
+                                      toFile="${project.basedir}/../../target/BACKEND/BACKEND.jar"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

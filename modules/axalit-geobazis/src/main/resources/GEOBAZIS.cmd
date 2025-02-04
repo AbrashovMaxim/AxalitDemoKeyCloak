@@ -1,0 +1,1 @@
+"jre\bin\java" -Xmx8g -Xms1g -Dfile.encoding="UTF-8" -Dprism.vsync=false -Dprism.vpipe=false -Dprism.verbose=false -Dprism.poolstats=false -Dprism.forceGPU=false -Dprism.maxvram=4096M -Dprism.order=d3d -jar GEOBAZIS.jar
